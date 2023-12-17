@@ -42,6 +42,10 @@ io.on("connection", (socket) => __awaiter(void 0, void 0, void 0, function* () {
     socket.on("create-room", (room) => __awaiter(void 0, void 0, void 0, function* () {
         const sockets = yield io.fetchSockets();
         console.log(sockets);
+        const items = sockets.findIndex((item) => item.rooms.has(room));
+        if (items !== -1) {
+            return io.emit("room-alert", 'room already created');
+        }
         console.log(`${room} was created`);
         io.emit('room', room);
         socket.join(room);

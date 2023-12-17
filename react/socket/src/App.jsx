@@ -91,6 +91,11 @@ export default function App() {
       setRoomList((prev) => [...prev, data]);
     });
 
+    socket.on("room-alert", (data) => {
+      console.log(data);
+      alert(data);
+    });
+
     return () => {
       socket.disconnect();
     };

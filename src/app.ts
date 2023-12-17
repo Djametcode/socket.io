@@ -38,7 +38,11 @@ io.on("connection", async (socket) => {
 
   socket.on("create-room", async (room) => {
     const sockets = await io.fetchSockets()
-    console.log(sockets)
+    const items = sockets.findIndex((item) => item.rooms.has(room))
+
+    if (items !== -1) {
+      return io.emit("room-alert", 'room already created')
+    }
     console.log(`${room} was created`)
 
     io.emit('room', room)
